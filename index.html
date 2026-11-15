@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#11123e">
+<meta name="description" content="A thoughtful, human-centered AI companion for reflective conversations and emotional wellbeing.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="haven-mark.png" type="image/png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="mode3.css">
+
+<title>Haven — A More Human Kind of Support</title>
+
+</head>
+
+<body>
+
+<div id="app-loader" role="status" aria-label="Loading application">
+    <span class="app-loader-spinner" aria-hidden="true"></span>
+    <span class="app-loader-label">Loading...</span>
+</div>
+<script>
+    const appLoaderStartedAt = performance.now();
+    window.addEventListener("load", () => {
+        const loader = document.querySelector("#app-loader");
+        if (loader) {
+            const remainingTime = Math.max(0, 3000 - (performance.now() - appLoaderStartedAt));
+            window.setTimeout(() => {
+                loader.classList.add("is-hidden");
+                loader.setAttribute("aria-hidden", "true");
+            }, remainingTime);
+        }
+    }, { once: true });
+</script>
+
+<!-- NAVIGATION -->
+
+<nav class="site-nav">
+    <a class="brand-lockup" href="#" aria-label="Haven home">
+        <img class="brand-mark" src="haven-mark.png" alt="">
+        <span class="brand-name">Haven</span>
+    </a>
+    <div class="nav-links">
+        <a class="nav-current" href="#"><span aria-hidden="true">⌂</span> Home</a>
+        <a href="#about">About</a>
+        <a href="#architecture">Features</a>
+        <a href="#gift-reward"><span aria-hidden="true">🎁</span> Gift Reward</a>
+        <a href="#discussion">Resources</a>
+        <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-account">
+        <span class="online-indicator"><i></i> Online</span>
+        <button type="button" class="notes-button" id="open-notes" aria-label="Open notes" title="Notes">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 3.75h7l4 4v12.5H7a2 2 0 0 1-2-2v-12.5a2 2 0 0 1 2-2Z"/>
+                <path d="M14 3.75v4h4M8.5 12h7M8.5 15.5h7"/>
+            </svg>
+        </button>
+        <a class="profile-button" href="#contact" aria-label="Contact us">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="8" r="3.25"/>
+                <path d="M5.5 20c.4-3.5 2.8-5.3 6.5-5.3s6.1 1.8 6.5 5.3"/>
+            </svg>
+        </a>
+    </div>
+</nav>
+
+<dialog class="notes-dialog" id="notes-dialog" aria-labelledby="notes-heading">
+    <div class="notes-dialog-header">
+        <div>
+            <p class="notes-eyebrow">YOUR STUDY LIBRARY</p>
+            <h2 id="notes-heading">Notes &amp; Documents</h2>
+        </div>
+        <button type="button" class="notes-close-button" id="close-notes" aria-label="Close notes">&times;</button>
+    </div>
+    <article class="notes-document">
+        <div class="notes-document-heading">
+            <div>
+                <h3>Statistics Notes — Chapters 1–13 with Handwritten Notes</h3>
+                <p>PDF document</p>
+            </div>
+            <a id="study-pdf-link" href="documents/statistics-notes-chapter-ordered-v2.pdf" target="_blank" rel="noopener">
+                Open PDF <span aria-hidden="true">↗</span>
+            </a>
+        </div>
+        <div class="notes-pdf-viewer" id="study-pdf-viewer">
+            <iframe
+                src="documents/statistics-notes-chapter-ordered-v2.pdf"
+                title="Statistics notes — Chapters 1–13"
+                loading="lazy">
+                <p>Your browser can’t display this PDF.
+                    <a href="documents/statistics-notes-chapter-ordered-v2.pdf">Open the notes PDF</a>.
+                </p>
+            </iframe>
+        </div>
+    </article>
+</dialog>
+
+
+<!-- HERO -->
+
+<main class="hero">
+    <div class="hero-copy">
+        <div class="badge"><span class="badge-dot"></span> A CALM SPACE TO CHECK IN</div>
+        <h1>You’re not alone.<br><span>Talk. Heal. Grow.</span></h1>
+        <p>Your AI tutor is here to guide your learning, answer your questions, and help you build confidence—one thoughtful conversation at a time.</p>
+        <div class="hero-actions">
+            <a href="#interaction" class="btn"><span aria-hidden="true">▶</span> Start Conversation</a>
+            <a href="#safety" class="hero-text-link">How we put care first</a>
+        </div>
+        <p class="hero-note">A supportive AI companion—not a replacement for professional care.</p>
+    </div>
+
+    <div class="hero-visual">
+        <div class="portrait-orbit portrait-orbit-outer"></div>
+        <div class="portrait-orbit portrait-orbit-inner"></div>
+        <div class="portrait-glow"></div>
+        <div class="hand-cursor" aria-hidden="true"></div>
+        <article class="tutor-profile-card" aria-label="Meet your AI tutor">
+            <div class="tutor-profile-heading">
+                <div class="portrait-stage">
+                    <img class="tutor-portrait-photo" src="therapist-portrait.jpg" alt="Young man portrait representing the AI tutor experience">
+                </div>
+                <div class="tutor-profile-name">
+                    <span>YOUR AI TUTOR</span>
+                    <h2>Haven</h2>
+                    <p><i class="status-pulse"></i> Take a moment, whenever you’re ready</p>
+                </div>
+            </div>
+            <div class="tutor-profile-stats" aria-label="Support features">
+                <div><strong>Your pace</strong><span>NO PRESSURE</span></div>
+                <div><strong>Camera optional</strong><span>YOUR CHOICE</span></div>
+                <div><strong>On-device</strong><span>GESTURE MODE</span></div>
+            </div>
+            <div class="tutor-profile-chart">
+                <svg viewBox="0 0 360 92" role="img" aria-label="A gentle decorative wave">
+                    <defs>
+                        <linearGradient id="calm-wave-fill" x1="0" x2="0" y1="0" y2="1">
+                            <stop offset="0%" stop-color="#9c91ff" stop-opacity=".42"/>
+                            <stop offset="100%" stop-color="#9c91ff" stop-opacity="0"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M0 68 C36 58 45 74 78 63 S124 46 155 58 S208 74 239 53 S299 35 360 48 V92 H0Z" fill="url(#calm-wave-fill)"/>
+                    <path d="M0 68 C36 58 45 74 78 63 S124 46 155 58 S208 74 239 53 S299 35 360 48" fill="none" stroke="#a99dff" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+                <span>A little space to pause, reflect, and begin again.</span>
+            </div>
+            <a class="tutor-profile-action" href="#interaction">Start a conversation <span aria-hidden="true">→</span></a>
+        </article>
+    </div>
+    <aside class="hero-camera-panel" aria-label="Interactive hand gesture controls">
+        <div class="camera-panel-heading">
+            <h2><span aria-hidden="true">▣</span> Live Camera Feed</h2>
+            <span class="gesture-active" id="gesture-active"><i></i> Gesture Ready</span>
+        </div>
+        <div class="webcam-card" id="webcam-card">
+            <video id="hand-tracking-video" autoplay muted playsinline aria-label="Private local camera preview"></video>
+            <div class="camera-placeholder" aria-hidden="true">
+                <span class="camera-placeholder-icon">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                        <path d="M4 7.5h3l1.5-2h7l1.5 2h3A1.5 1.5 0 0 1 21.5 9v9a1.5 1.5 0 0 1-1.5 1.5H4A1.5 1.5 0 0 1 2.5 18V9A1.5 1.5 0 0 1 4 7.5Z"/>
+                        <circle cx="12" cy="13" r="3.5"/>
+                    </svg>
+                </span>
+                <strong>Your camera stays off until you choose</strong>
+                <span>Turn it on to try hand gestures</span>
+            </div>
+            <span class="camera-feed-label"><i class="webcam-live-dot"></i><span id="camera-feed-label">CAMERA OFF · PRIVATE</span></span>
+        </div>
+        <p class="gesture-recognition" id="gesture-recognized" aria-live="polite"><span>✦</span> Ready to recognize a gesture</p>
+        <p class="hand-tracking-status" id="hand-tracking-status" role="status" aria-live="polite">Choose a gesture or use manual mode.</p>
+        <button type="button" class="hand-tracking-button" id="hand-tracking-toggle" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8.2 11V5.8a1.6 1.6 0 0 1 3.2 0v4.1-5.7a1.6 1.6 0 0 1 3.2 0v5.7-4a1.6 1.6 0 0 1 3.2 0v5.2-2.6a1.6 1.6 0 0 1 3.2 0v6.2c0 4.1-2.5 6.8-6.5 6.8h-2.2c-2.2 0-3.8-.9-5-2.8l-3.1-4.1a1.8 1.8 0 0 1 2.8-2.2L8.2 15V11Z"/>
+            </svg>
+            <span>Enable camera gestures</span>
+            <span class="hand-button-arrow" aria-hidden="true">→</span>
+        </button>
+        <a class="manual-mode-link" href="#interaction"><span aria-hidden="true">▧</span> No camera? Explore the interaction flow <span aria-hidden="true">→</span></a>
+        <p class="camera-privacy-note">Camera is optional. Video is processed on this device and never recorded or uploaded.</p>
+    </aside>
+    <div class="quick-support-cards" aria-label="Ways to get support">
+        <a href="#interaction" class="quick-support-card mood-card"><span class="quick-card-icon" aria-hidden="true">☏</span><span><strong>Mood Check</strong><small>Share how you feel</small></span><b aria-hidden="true">→</b></a>
+        <a href="#plans" class="quick-support-card exam-card"><span class="quick-card-icon" aria-hidden="true">✦</span><span><strong>Exam Stress Support</strong><small>Get exam help &amp; calmness</small></span><b aria-hidden="true">→</b></a>
+        <a href="#safety" class="quick-support-card study-card"><span class="quick-card-icon" aria-hidden="true">✿</span><span><strong>Study Pressure Support</strong><small>Manage study stress</small></span><b aria-hidden="true">→</b></a>
+        <a href="#discussion" class="quick-support-card space-card"><span class="quick-card-icon" aria-hidden="true">▤</span><span><strong>Your Safe Space</strong><small>Talk freely, always</small></span><b aria-hidden="true">→</b></a>
+    </div>
+    <section class="gesture-guide" aria-labelledby="gesture-guide-heading">
+        <div class="gesture-guide-heading">
+            <span class="gesture-guide-icon" aria-hidden="true">✋</span>
+            <div><h2 id="gesture-guide-heading">Hand Gesture Controls</h2><p>Use simple gestures to interact with your tutor</p></div>
+        </div>
+        <div class="gesture-guide-list">
+            <div class="gesture-guide-item" data-gesture="open-palm"><span>✋</span><strong>Open Palm</strong><small>Start Session</small></div>
+            <div class="gesture-guide-item" data-gesture="thumbs-up"><span>👍</span><strong>Thumbs Up</strong><small>Feel Positive</small></div>
+            <div class="gesture-guide-item" data-gesture="thumbs-down"><span>👎</span><strong>Thumbs Down</strong><small>Feel Low</small></div>
+            <div class="gesture-guide-item" data-gesture="peace"><span>✌️</span><strong>Two Fingers</strong><small>Next Option</small></div>
+            <div class="gesture-guide-item" data-gesture="fist"><span>✊</span><strong>Closed Fist</strong><small>Pause</small></div>
+        </div>
+    </section>
+</main>
+
+<!-- SPECIAL GIFT REWARD -->
+
+<section class="gift-reward-section" id="gift-reward" aria-labelledby="gift-reward-heading">
+    <div class="gift-reward-card">
+        <div class="gift-reward-icon" aria-hidden="true">🎁</div>
+        <div class="gift-reward-content">
+            <p class="gift-reward-eyebrow">HAVEN · SPECIAL GIFT REWARD</p>
+            <h2 id="gift-reward-heading">Learn Something New. Win Something Special!</h2>
+            <p>Haven can introduce special surprise gifts to recognize active participation, consistent learning, and outstanding performance.</p>
+            <p class="gift-reward-winners"><span aria-hidden="true">🎉</span> The first 3 participants will receive gifts!</p>
+            <p class="gift-reward-note">Gift details and eligibility will be announced clearly before each reward activity.</p>
+        </div>
+        <span class="gift-reward-sparkle" aria-hidden="true">✨</span>
+    </div>
+</section>
+
+<!-- ABOUT -->
+
+<section id="about">
+
+<div class="section-label">01 · SYSTEM FRAMING</div>
+
+<h2>Human-like Interaction is a Multimodal Systems Problem</h2>
+
+<p class="description">
+Our AI Tutor aims to provide natural human-like
+communication by coordinating language, voice,
+facial expressions, gaze, posture and hand movements.
+</p>
+
+<div class="grid">
+
+<div class="card">
+<h3>Coordinate the Channels</h3>
+<p>
+Language, voice, face, gaze, posture and hand
+movement must behave as one experience.
+</p>
+</div>
+
+<div class="card">
+<h3>Bound the Interpretation</h3>
+<p>
+Use realism to improve communication without
+implying consciousness or clinical authority.
+</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ARCHITECTURE -->
+
+<section id="architecture">
+
+<div class="section-label">02 · EXPERIENCE ARCHITECTURE</div>
+
+<h2>Five Synchronized Layers Drive the Experience</h2>
+
+<p class="description">
+The system uses five interconnected layers
+to create a coordinated AI Tutor experience.
+</p>
+
+<div class="architecture">
+
+<div class="layer">01<br>Perception</div>
+
+<div class="layer">02<br>Reasoning</div>
+
+<div class="layer">03<br>Expression</div>
+
+<div class="layer">04<br>Memory</div>
+
+<div class="layer">05<br>Safety</div>
+
+</div>
+
+</section>
+
+
+<!-- INTERACTION -->
+
+<section id="interaction">
+
+<div class="section-label">03 · REAL-TIME INTERACTION</div>
+
+<h2>The Real-Time Loop Turns Speech into Presence</h2>
+
+<p class="description">
+The AI listens to the user, understands the
+conversation, generates a response and
+communicates through voice and expressions.
+</p>
+
+<div class="flow">
+
+<div class="flow-item">
+<h3>🎤 Listen & Transcribe</h3>
+<p>Capture the user's voice.</p>
+</div>
+
+<div class="arrow">↓</div>
+
+<div class="flow-item">
+<h3>🧠 Interpret Intent & Risk</h3>
+<p>Understand the user's message and context.</p>
+</div>
+
+<div class="arrow">↓</div>
+
+<div class="flow-item">
+<h3>💬 Generate Response & Plan</h3>
+<p>Create an appropriate conversational response.</p>
+</div>
+
+<div class="arrow">↓</div>
+
+<div class="flow-item">
+<h3>🔊 Render Voice & Monitor</h3>
+<p>Deliver the response through synchronized voice and avatar expressions.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- HAND GESTURE SECTION -->
+
+<section class="gesture-section" id="gestures">
+
+    <div class="section-title">
+        04 · HUMAN HAND GESTURES
+    </div>
+
+    <h2>Natural Hand Gestures for AI Communication</h2>
+
+    <p class="description">
+        The AI Tutor uses natural human hand movements
+        to express emotions, explain ideas and communicate
+        with users more effectively.
+    </p>
+
+    <div class="gesture-container">
+
+        <div class="gesture-card">
+            <img src="title2.svg"
+                 alt="Open hand gesture">
+
+            <h3>Open Hand Gesture</h3>
+
+            <p>
+                Used for welcoming users and creating
+                a friendly environment.
+            </p>
+        </div>
+
+        <div class="gesture-card">
+            <img src="title4.svg"
+                 alt="Explaining hand gesture">
+
+            <h3>Explaining Gesture</h3>
+
+            <p>
+                Used while explaining ideas and
+                providing helpful information.
+            </p>
+        </div>
+
+        <div class="gesture-card">
+            <img src="title1.svg"
+                 alt="Empathetic hand gesture">
+
+            <h3>Empathetic Gesture</h3>
+
+            <p>
+                Gentle hand movements that support
+                empathetic communication.
+            </p>
+        </div>
+
+        <div class="gesture-card">
+            <img src="title3.svg"
+                 alt="Guidance hand gesture">
+
+            <h3>Guidance Gesture</h3>
+
+            <p>
+                Used to emphasize important points
+                and provide guidance.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SAFETY -->
+
+<section id="safety">
+
+<div class="section-label">05 · CONTROL PLANE</div>
+
+<h2>Safety and Memory Need Their Own Control Plane</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Safety & Memory Control</h3>
+<p>
+Transparent central governance of memory
+and safety controls.
+</p>
+</div>
+
+<div class="card">
+<h3>Crisis Detection</h3>
+<p>
+Detect signals that indicate needs beyond
+the application's scope.
+</p>
+</div>
+
+<div class="card">
+<h3>Escalation Pathways</h3>
+<p>
+Provide region-appropriate support routes.
+</p>
+</div>
+
+<div class="card">
+<h3>Memory Management</h3>
+<p>
+Bounded, inspectable and correctable
+memory management.
+</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- EVALUATION -->
+
+<section id="evaluation">
+
+<div class="section-label">06 · EVALUATION</div>
+
+<h2>Evaluation Must Measure Trust, Timing and Safe Behavior</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>System</h3>
+<p>
+Latency, transcription quality,
+relevance and interruption recovery.
+</p>
+</div>
+
+<div class="card">
+<h3>Human Factors</h3>
+<p>
+Perceived listening, agency,
+comfort and appropriate trust.
+</p>
+</div>
+
+<div class="card">
+<h3>Safety</h3>
+<p>
+False negatives, false positives,
+escalation quality and consistency.
+</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ROADMAP -->
+
+<section id="roadmap">
+
+<div class="section-label">07 · DELIVERY STRATEGY</div>
+
+<h2>A Staged Build Keeps Technical and Ethical Risk Visible</h2>
+
+<div class="roadmap">
+
+<div class="roadmap-item">
+<h3>01 · Prototype</h3>
+<p>Voice and text with a simple avatar.</p>
+</div>
+
+<div class="roadmap-item">
+<h3>02 · Express</h3>
+<p>Add gaze, facial expression and constrained gestures.</p>
+</div>
+
+<div class="roadmap-item">
+<h3>03 · Test</h3>
+<p>Introduce memory, safety evaluation and moderated pilots.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="achievements-section" id="achievements" aria-labelledby="achievements-heading">
+    <div class="achievements-content">
+        <div class="section-label">08 · ACHIEVEMENTS</div>
+        <h2 id="achievements-heading">My Achievements</h2>
+
+        <div class="achievement-columns">
+            <article class="achievement-card">
+                <h3>Academic Achievement</h3>
+                <ul>
+                    <li>🥇 1st Rank in IMO (International Mathematics Olympiad).</li>
+                </ul>
+            </article>
+
+            <article class="achievement-card">
+                <h3>Certifications &amp; Skill Development</h3>
+                <ul>
+                    <li>📜 Certificate in AI in Technical Storytelling.</li>
+                    <li>🎨 Certificate of Completion in Photoshop and Figma.</li>
+                    <li>🤖 Certificate from be10x for completing the AI Tools and ChatGPT Workshop.</li>
+                </ul>
+            </article>
+
+            <article class="achievement-card">
+                <h3>Competitions &amp; Participation</h3>
+                <ul>
+                    <li>💻 Participated in Bharat-Tech Hackathon 3.0.</li>
+                    <li>🏁 Participated in the Blind Rush Competition.</li>
+                    <li>🇮🇳 Participated in Mission Upskill India.</li>
+                </ul>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- SESSION PLANS -->
+
+<section class="plans-section" id="plans" aria-labelledby="plans-heading">
+    <div class="plans-content">
+        <div class="section-label">09 · YOUR TIME, YOUR PACE</div>
+        <h2 id="plans-heading">A little space to feel heard</h2>
+        <p class="description">
+            Choose the session length that feels right. Each monthly plan includes one session every month.
+        </p>
+
+        <div class="plans-grid">
+            <article class="plan-card">
+                <div class="plan-icon" aria-hidden="true">☀</div>
+                <p class="plan-eyebrow">A gentle check-in</p>
+                <h3>Quick Pause</h3>
+                <p class="plan-duration"><span>60</span> min</p>
+                <p class="plan-description">A calm moment to pause, share what's on your mind, and find a little clarity.</p>
+                <div class="plan-price">₹199 <span>/ month</span></div>
+                <ul class="plan-features">
+                    <li>One 60 min session each month</li>
+                    <li>A welcoming space to reflect</li>
+                    <li>Renews monthly</li>
+                </ul>
+                <a class="plan-button" href="https://api.whatsapp.com/send?phone=919262746293&amp;text=Hi%2C%20I%27d%20like%20to%20subscribe%20to%20the%20monthly%2060-minute%20Quick%20Pause%20plan%20for%20%E2%82%B9199%20per%20month%20(one%20session%20per%20month).">
+                    Choose 60 min <span aria-hidden="true">→</span>
+                </a>
+            </article>
+
+            <article class="plan-card plan-card-featured">
+                <div class="plan-ribbon">A lovely balance</div>
+                <div class="plan-icon" aria-hidden="true">✦</div>
+                <p class="plan-eyebrow">A little more room</p>
+                <h3>Open Up</h3>
+                <p class="plan-duration"><span>90</span> min</p>
+                <p class="plan-description">More time to explore a thought, untangle a feeling, and consider a next step.</p>
+                <div class="plan-price">₹349 <span>/ month</span></div>
+                <ul class="plan-features">
+                    <li>One 90 min session each month</li>
+                    <li>More time for thoughtful reflection</li>
+                    <li>Renews monthly</li>
+                </ul>
+                <a class="plan-button" href="https://api.whatsapp.com/send?phone=919262746293&amp;text=Hi%2C%20I%27d%20like%20to%20subscribe%20to%20the%20monthly%2090-minute%20Open%20Up%20plan%20for%20%E2%82%B9349%20per%20month%20(one%20session%20per%20month).">
+                    Choose 90 min <span aria-hidden="true">→</span>
+                </a>
+            </article>
+
+            <article class="plan-card">
+                <div class="plan-icon" aria-hidden="true">☾</div>
+                <p class="plan-eyebrow">Space to go deeper</p>
+                <h3>Take Your Time</h3>
+                <p class="plan-duration"><span>120</span> min</p>
+                <p class="plan-description">Settle into a longer conversation, reflect at your own pace, and feel less rushed.</p>
+                <div class="plan-price">₹499 <span>/ month</span></div>
+                <ul class="plan-features">
+                    <li>One 120 min session each month</li>
+                    <li>Room for an unhurried check-in</li>
+                    <li>Renews monthly</li>
+                </ul>
+                <a class="plan-button" href="https://api.whatsapp.com/send?phone=919262746293&amp;text=Hi%2C%20I%27d%20like%20to%20subscribe%20to%20the%20monthly%20120-minute%20Take%20Your%20Time%20plan%20for%20%E2%82%B9499%20per%20month%20(one%20session%20per%20month).">
+                    Choose 120 min <span aria-hidden="true">→</span>
+                </a>
+            </article>
+        </div>
+
+        <p class="plans-note">These study-support sessions are meant to encourage reflection and routines, not replace academic guidance from teachers or mentors.</p>
+    </div>
+</section>
+
+<!-- DISCUSSION TAB / FORUM -->
+<section id="discussion" aria-labelledby="discussion-heading">
+    <div class="discussion-content">
+        <div class="section-label">EXAM SUPPORT &amp; FEEDBACK</div>
+        <h2 id="discussion-heading">Student Reviews on Exam Stress &amp; Backlogs</h2>
+        <p class="description">
+            Real experiences from students dealing with exam stress, revision pressure, missed deadlines, and study burnout.
+        </p>
+
+        <div class="discussion-toolbar">
+            <label class="search-box" for="discussion-search">
+                <span class="search-icon" aria-hidden="true">⌕</span>
+                <input type="search" id="discussion-search" placeholder="Search exam reviews..." aria-label="Search exam reviews">
+            </label>
+            <button type="button" class="btn-create-post" id="open-discussion-modal">
+                <span aria-hidden="true">＋</span> Share your experience
+            </button>
+        </div>
+
+        <div class="discussion-tabs" aria-label="Filter student reviews by topic">
+            <button type="button" class="d-tab active" data-category="all" aria-pressed="true">All topics</button>
+            <button type="button" class="d-tab" data-category="stress" aria-pressed="false">Exam stress</button>
+            <button type="button" class="d-tab" data-category="backlog" aria-pressed="false">Backlogs</button>
+            <button type="button" class="d-tab" data-category="focus" aria-pressed="false">Study focus</button>
+            <button type="button" class="d-tab" data-category="routine" aria-pressed="false">Daily routine</button>
+        </div>
+
+        <div class="discussion-feed" id="discussion-feed" aria-live="polite">
+            <!-- Discussion cards are rendered by JavaScript. -->
+        </div>
+    </div>
+</section>
+
+<!-- Modal for New Discussion -->
+<div class="discussion-modal-overlay" id="discussion-modal" aria-hidden="true">
+    <div class="discussion-modal" role="dialog" aria-modal="true" aria-labelledby="discussion-modal-heading">
+        <div class="modal-header">
+            <div>
+                <div class="section-label">EXAM SUPPORT &amp; FEEDBACK</div>
+                <h3 id="discussion-modal-heading">Share your exam journey</h3>
+            </div>
+            <button type="button" class="close-modal-btn" id="close-discussion-modal" aria-label="Close dialog">&times;</button>
+        </div>
+        <form id="new-discussion-form">
+            <div class="input-group">
+                <label for="post-author">Your name or title</label>
+                <input type="text" id="post-author" placeholder="e.g. Priya, B.Tech Student" required>
+            </div>
+
+            <div class="input-group">
+                <label for="post-category">Topic</label>
+                <select id="post-category" required>
+                    <option value="stress">Exam stress</option>
+                    <option value="backlog">Backlogs</option>
+                    <option value="focus">Study focus</option>
+                    <option value="routine">Daily routine</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="post-title">Review title</label>
+                <input type="text" id="post-title" placeholder="What are you dealing with right now?" required>
+            </div>
+
+            <div class="input-group message-field-shell">
+                <label for="post-content">Your message</label>
+                <div class="voice-toolbar">
+                    <span class="voice-label">Voice</span>
+                    <button type="button" class="voice-toggle" aria-label="Use voice input">🎙️ Speak</button>
+                </div>
+                <textarea id="post-content" rows="4" placeholder="Share your exam stress, backlog pressure, or study routine experience..." required></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" id="cancel-discussion-modal">Cancel</button>
+                <button type="submit" class="btn-submit">Publish review</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- CONTACT -->
+
+<section id="contact">
+
+<div class="section-label">09 · CONTACT</div>
+
+<h2>Get in Touch</h2>
+
+<p class="description">
+Have questions or feedback about our AI Tutor research? Reach out directly via WhatsApp.
+</p>
+
+<div class="form-container">
+
+    <form id="contact-form">
+
+    <input type="text"
+           id="name"
+           name="name"
+           placeholder="Your Name"
+           required>
+
+    <input type="email"
+           id="email"
+           name="email"
+           placeholder="Your Email"
+           required>
+
+    <div class="message-field-shell">
+        <div class="voice-toolbar">
+            <span class="voice-label">Voice</span>
+            <button type="button" class="voice-toggle" aria-label="Use voice input">🎙️ Speak</button>
+        </div>
+        <textarea id="message"
+                  name="message"
+                  class="message-input"
+                  placeholder="Write your message"
+                  required></textarea>
+    </div>
+
+    <button type="submit">
+        Send Message
+    </button>
+
+    <p class="form-status" role="status" aria-live="polite"></p>
+
+</form>
+
+</div>
+
+</section>
+
+<script>
+    const form = document.querySelector("#contact-form") || document.querySelector(".form-container form");
+    if (form && !form.dataset.whatsappBound) {
+        form.dataset.whatsappBound = "true";
+        const status = form.querySelector(".form-status");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const name = form.querySelector('[name="name"]').value.trim();
+            const email = form.querySelector('[name="email"]').value.trim();
+            const message = form.querySelector('[name="message"]').value.trim();
+
+            const text = `Name: ${name}\nEmail: ${email}\nMessage: ${message}`;
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=919262746293&text=${encodeURIComponent(text)}`;
+
+            window.open(whatsappUrl, "_blank");
+
+            if (status) {
+                status.textContent = "Opening WhatsApp...";
+                status.classList.remove("is-error");
+            }
+
+            form.reset();
+        });
+    }
+</script>
+<script src="script.js"></script>
+<script type="module">
+    const trackingButton = document.querySelector("#hand-tracking-toggle");
+    const trackingStatus = document.querySelector("#hand-tracking-status");
+    const trackingVideo = document.querySelector("#hand-tracking-video");
+    const webcamCard = document.querySelector("#webcam-card");
+    const cameraFeedLabel = document.querySelector("#camera-feed-label");
+    const gestureIndicator = document.querySelector("#gesture-active");
+    const gestureRecognition = document.querySelector("#gesture-recognized");
+    const gestureGuideItems = document.querySelectorAll(".gesture-guide-item");
+    const heroVisual = document.querySelector(".hero-visual");
+    const handButtonLabel = trackingButton.querySelector("span");
+    const handLandmarkerVersion = "1.2.2";
+    let handLandmarker = null;
+    let webcamStream = null;
+    let trackingActive = false;
+    let trackingStarting = false;
+    let trackingStartupId = 0;
+    let trackingFrame = 0;
+    let lastVideoTime = -1;
+    let lastStatusMessage = "";
+
+    function setTrackingStatus(message) {
+        if (message !== lastStatusMessage) {
+            trackingStatus.textContent = message;
+            lastStatusMessage = message;
+        }
+    }
+
+    function setGestureRecognition(message) {
+        const label = gestureRecognition.querySelector("span");
+        const text = `${label.textContent} ${message}`;
+        if (gestureRecognition.textContent.trim() !== text.trim()) {
+            gestureRecognition.lastChild.textContent = ` ${message}`;
+        }
+    }
+
+    async function loadHandLandmarker() {
+        const packageUrl = `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${handLandmarkerVersion}`;
+        const { FilesetResolver, HandLandmarker } = await import(`${packageUrl}/vision_bundle.mjs`);
+        const vision = await FilesetResolver.forVisionTasks(`${packageUrl}/wasm`);
+
+        return HandLandmarker.createFromOptions(vision, {
+            baseOptions: {
+                modelAssetPath: "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task"
+            },
+            runningMode: "VIDEO",
+            numHands: 1
+        });
+    }
+
+    function describeHand(landmarks) {
+        const indexTip = landmarks[8];
+        const thumbTip = landmarks[4];
+        const pinchDistance = Math.hypot(indexTip.x - thumbTip.x, indexTip.y - thumbTip.y);
+        const fingerIsExtended = ([tip, joint]) => landmarks[tip].y < landmarks[joint].y;
+        const [index, middle, ring, pinky] = [[8, 6], [12, 10], [16, 14], [20, 18]]
+            .map(fingerIsExtended);
+        const extendedCount = [index, middle, ring, pinky].filter(Boolean).length;
+        const thumbUp = extendedCount === 0 && landmarks[4].y < landmarks[3].y - 0.06;
+        const thumbDown = extendedCount === 0 && landmarks[4].y > landmarks[3].y + 0.06;
+        let gesture = "hand";
+
+        if (pinchDistance < 0.055) {
+            gesture = "pinch";
+        } else if (extendedCount === 0 && !thumbUp && !thumbDown) {
+            gesture = "fist";
+        } else if (thumbUp) {
+            gesture = "thumbs-up";
+        } else if (thumbDown) {
+            gesture = "thumbs-down";
+        } else if (index && middle && !ring && !pinky) {
+            gesture = "peace";
+        } else if (extendedCount >= 4) {
+            gesture = "open-palm";
+        }
+
+        const gestureMessages = {
+            "open-palm": ["Open Palm", "Open palm recognized — welcome."],
+            "thumbs-up": ["Thumbs Up", "Positive check-in recognized."],
+            "thumbs-down": ["Thumbs Down", "Low-mood check-in recognized."],
+            peace: ["Two Fingers", "Next option gesture recognized."],
+            fist: ["Closed Fist", "Pause gesture recognized."],
+            pinch: ["Pinch", "Pinch recognized — guide the light."],
+            hand: ["Hand Detected", "Hand detected — try one of the gestures below."]
+        };
+        const [gestureName, message] = gestureMessages[gesture];
+
+        heroVisual.classList.remove("is-pinching", "is-hand-open", "is-thumbs-up", "is-thumbs-down", "is-paused");
+        heroVisual.classList.toggle("is-pinching", gesture === "pinch");
+        heroVisual.classList.toggle("is-hand-open", gesture === "open-palm");
+        heroVisual.classList.toggle("is-thumbs-up", gesture === "thumbs-up");
+        heroVisual.classList.toggle("is-thumbs-down", gesture === "thumbs-down");
+        heroVisual.classList.toggle("is-paused", gesture === "fist");
+        gestureRecognition.querySelector("span").textContent = "✓";
+        setGestureRecognition(`Gesture Recognized: ${gestureName}`);
+        gestureGuideItems.forEach((item) => item.classList.toggle("is-current", item.dataset.gesture === gesture));
+        return message;
+    }
+
+    function renderHandTrackingFrame() {
+        if (!trackingActive || trackingVideo.readyState < 2) {
+            if (trackingActive) trackingFrame = requestAnimationFrame(renderHandTrackingFrame);
+            return;
+        }
+
+        if (trackingVideo.currentTime !== lastVideoTime) {
+            lastVideoTime = trackingVideo.currentTime;
+            try {
+                const result = handLandmarker.detectForVideo(trackingVideo, performance.now());
+                const landmarks = result.landmarks[0];
+
+                if (landmarks) {
+                    const fingertip = landmarks[8];
+                    heroVisual.style.setProperty("--hand-x", `${(1 - fingertip.x) * 100}%`);
+                    heroVisual.style.setProperty("--hand-y", `${fingertip.y * 100}%`);
+                    heroVisual.classList.add("is-tracking");
+                    setTrackingStatus(describeHand(landmarks));
+                } else {
+                    heroVisual.classList.remove("is-tracking", "is-pinching", "is-hand-open", "is-thumbs-up", "is-thumbs-down", "is-paused");
+                    gestureIndicator.classList.remove("is-active");
+                    setGestureRecognition("Show your hand to get started");
+                    gestureGuideItems.forEach((item) => item.classList.remove("is-current"));
+                    setTrackingStatus("Show one hand to guide the light.");
+                }
+                if (landmarks) {
+                    gestureIndicator.classList.add("is-active");
+                    gestureIndicator.lastChild.textContent = " Gesture Active";
+                }
+            } catch (error) {
+                console.error("Hand tracking failed:", error);
+                stopHandTracking();
+                setTrackingStatus("Hand tracking stopped after an error. Please try again.");
+                return;
+            }
+        }
+
+        if (trackingActive) trackingFrame = requestAnimationFrame(renderHandTrackingFrame);
+    }
+
+    function stopHandTracking() {
+        trackingStartupId += 1;
+        trackingStarting = false;
+        trackingActive = false;
+        cancelAnimationFrame(trackingFrame);
+        if (webcamStream) {
+            webcamStream.getTracks().forEach((track) => track.stop());
+            webcamStream = null;
+        }
+        trackingVideo.pause();
+        trackingVideo.srcObject = null;
+        webcamCard.classList.remove("is-live");
+        cameraFeedLabel.textContent = "CAMERA OFF · PRIVATE";
+        gestureIndicator.classList.remove("is-active");
+        gestureIndicator.lastChild.textContent = " Gesture Ready";
+        gestureRecognition.querySelector("span").textContent = "✦";
+        setGestureRecognition("Ready to recognize a gesture");
+        gestureGuideItems.forEach((item) => item.classList.remove("is-current"));
+        heroVisual.classList.remove("is-tracking", "is-pinching", "is-hand-open", "is-thumbs-up", "is-thumbs-down", "is-paused");
+        heroVisual.style.removeProperty("--hand-x");
+        heroVisual.style.removeProperty("--hand-y");
+        trackingButton.removeAttribute("aria-busy");
+        trackingButton.setAttribute("aria-pressed", "false");
+        trackingButton.disabled = false;
+        handButtonLabel.textContent = "Enable camera gestures";
+    }
+
+    trackingButton.addEventListener("click", async () => {
+        if (trackingActive || trackingStarting) {
+            const wasStarting = trackingStarting;
+            stopHandTracking();
+            setTrackingStatus(wasStarting
+                ? "Camera setup cancelled. If permission is pending, the camera will stop as soon as access is returned."
+                : "Camera off. Your video was not recorded or uploaded.");
+            return;
+        }
+
+        if (!navigator.mediaDevices?.getUserMedia) {
+            setTrackingStatus("Camera access requires HTTPS or a supported secure browser.");
+            return;
+        }
+
+        const startupId = ++trackingStartupId;
+        trackingStarting = true;
+        trackingButton.setAttribute("aria-busy", "true");
+        handButtonLabel.textContent = "Cancel camera setup";
+        setTrackingStatus("Preparing private hand tracking…");
+
+        try {
+            handLandmarker = handLandmarker || await loadHandLandmarker();
+            if (startupId !== trackingStartupId) return;
+
+            const stream = await navigator.mediaDevices.getUserMedia({
+                audio: false,
+                video: {
+                    facingMode: "user",
+                    width: { ideal: 640 },
+                    height: { ideal: 480 }
+                }
+            });
+            if (startupId !== trackingStartupId) {
+                stream.getTracks().forEach((track) => track.stop());
+                return;
+            }
+
+            webcamStream = stream;
+            trackingVideo.srcObject = webcamStream;
+            await trackingVideo.play();
+            if (startupId !== trackingStartupId) return;
+
+            trackingStarting = false;
+            trackingButton.removeAttribute("aria-busy");
+            webcamCard.classList.add("is-live");
+            cameraFeedLabel.textContent = "LIVE · ON DEVICE";
+            trackingActive = true;
+            lastVideoTime = -1;
+            trackingButton.setAttribute("aria-pressed", "true");
+            handButtonLabel.textContent = "Turn camera off";
+            trackingStatus.textContent = "Camera on. Show one hand to begin.";
+            setTrackingStatus("Camera on. Show one hand to begin.");
+            trackingFrame = requestAnimationFrame(renderHandTrackingFrame);
+        } catch (error) {
+            if (startupId !== trackingStartupId) return;
+
+            console.error("Could not start hand tracking:", error);
+            stopHandTracking();
+            const message = error.name === "NotAllowedError"
+                ? "Camera access was denied. Allow it in your browser settings to try hand tracking."
+                : error.name === "NotFoundError"
+                    ? "No camera was found on this device."
+                    : error.name === "NotReadableError"
+                        ? "The camera is busy in another app. Close it and try again."
+                        : "Hand tracking could not start. Check your connection and camera permissions.";
+            setTrackingStatus(message);
+        }
+    });
+
+    window.addEventListener("pagehide", stopHandTracking);
+</script>
+<script>
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+            navigator.serviceWorker.register("./sw.js").catch((error) => {
+                console.error("Service worker registration failed:", error);
+            });
+        });
+    }
+</script>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<h3>Building a Realistic Human AI Tutor</h3>
+
+<p>
+Multimodal Presence · Human Interaction · Responsible AI
+</p>
+
+<p style="margin-top:15px;">
+© 2026 Haven
+</p>
+
+</footer>
+
+</body>
+</html>
